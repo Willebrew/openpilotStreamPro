@@ -11,10 +11,8 @@ if os_type != "Linux":
 ffmpeg_command = [
     'ffmpeg',
     '-re',                                   # Read input at native frame rate
-    '-f', 'x11grab',                         # Screen capture for Linux
-    '-framerate', '30',                      # Supported framerate
-    '-video_size', '1920x1080',              # Set resolution to 1080p
-    '-i', ':0.0',                            # Display number (adjust if necessary)
+    '-f', 'pipewire',                        # Use PipeWire for screen capture on Wayland
+    '-i', '0',                               # Default PipeWire source
     '-f', 'lavfi',
     '-i', 'anullsrc',                        # Add silent audio source
     '-c:v', 'libx264',                       # Video codec
@@ -40,3 +38,4 @@ except KeyboardInterrupt:
     print("Stopping the stream...")
     process.terminate()
     process.wait()
+    
